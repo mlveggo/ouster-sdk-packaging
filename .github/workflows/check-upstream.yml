@@ -1,0 +1,39 @@
+name: Check Upstream Ouster SDK Release
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get upstream latest release
+        id: upstream
+        run: |
+          TAG=$(curl -s https://api.github.com/repos/ouster-lidar/ouster-sdk/releases/latest | jq -r .tag_name)
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+
+      - name: Check if tag exists locally
+        id: exists
+        run: |
+          if git rev-parse "${{ steps.upstream.outputs.tag }}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create tag and push
+        if: steps.exists.outputs.exists == 'false'
+        run: |
+          git tag ${{ steps.upstream.outputs.tag }}
+          git push origin ${{ steps.upstream.outputs.tag }}

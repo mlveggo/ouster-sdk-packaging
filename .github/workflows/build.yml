@@ -1,0 +1,77 @@
+name: Build Ouster SDK
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set version
+        run: echo "OUSTER_VERSION=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+
+      - name: Install deps (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake \
+            libcurl4-openssl-dev \
+            libtins-dev \
+            libpcap-dev \
+            libeigen3-dev
+
+      - name: Install deps (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew update
+          brew install cmake eigen curl libtins
+
+      - name: Install deps (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          vcpkg install eigen3 curl libpcap libtins
+
+      - name: Build (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          chmod +x scripts/build-linux.sh
+          scripts/build-linux.sh
+
+      - name: Build (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          chmod +x scripts/build-macos.sh
+          scripts/build-macos.sh
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          scripts/build-windows.ps1
+
+      - name: Package
+        shell: bash
+        run: |
+          mkdir dist
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            zip -r dist/ouster-sdk-${OUSTER_VERSION}-windows-msvc-x64.zip stage
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            tar czf dist/ouster-sdk-${OUSTER_VERSION}-macos-arm64.tar.gz stage
+          else
+            tar czf dist/ouster-sdk-${OUSTER_VERSION}-linux-x86_64.tar.gz stage
+          fi
+
+      - name: Publish Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
