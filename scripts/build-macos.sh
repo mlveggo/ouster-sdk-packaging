@@ -18,6 +18,7 @@ cmake -S . -B build \
   -DBUILD_EXAMPLES=OFF \
   -DBUILD_VIZ=OFF \
   -DBUILD_TESTING=OFF \
+  -DBUILD_MAPPING=OFF \
   -DCMAKE_INSTALL_PREFIX="$STAGE_DIR"
 
 cmake --build build -- -j$(sysctl -n hw.ncpu)

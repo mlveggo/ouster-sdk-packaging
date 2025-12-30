@@ -20,6 +20,7 @@ cmake -S . -B build `
   -DBUILD_VIZ=OFF `
   -DBUILD_OSF=ON `
   -DBUILD_TESTING=OFF `
+  -DBUILD_MAPPING=OFF `
   -DCMAKE_INSTALL_PREFIX=../stage `
   -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
 
