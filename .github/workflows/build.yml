@@ -57,24 +57,34 @@ jobs:
       - name: Install dependencies (Linux)
         if: runner.os == 'Linux'
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
+            sudo apt-get update
+            sudo apt-get install -y \
             cmake \
             libcurl4-openssl-dev \
             libtins-dev \
             libpcap-dev \
-            libeigen3-dev
+            libeigen3-dev \
+            libpng-dev \
+            zlib1g-dev \
+            flatbuffers-dev
 
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
         run: |
           brew update
-          brew install cmake eigen curl libtins
+          brew install \
+            cmake \
+            eigen \
+            curl \
+            libtins \
+            libpng \
+            zlib \
+            flatbuffers
 
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
         run: |
-          vcpkg install eigen3 curl libpcap libtins
+          vcpkg install eigen3 curl libpcap libtins libpng zlib flatbuffers
 
       # -------------------------
       # Build
