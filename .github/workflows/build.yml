@@ -134,3 +134,4 @@ jobs:
         with:
           tag_name: ${{ env.OUSTER_VERSION }}
           files: dist/*
+          fail_on_unmatched_files: true
