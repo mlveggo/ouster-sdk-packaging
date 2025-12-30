@@ -10,6 +10,7 @@ git checkout $Env:OUSTER_VERSION
 
 cmake -S . -B build `
   -DCMAKE_BUILD_TYPE=Release `
+  -DBUILD_OSF=ON `
   -DBUILD_SHARED_LIBRARY=OFF `
   -DBUILD_EXAMPLES=OFF `
   -DBUILD_VIZ=OFF `
