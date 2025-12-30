@@ -3,7 +3,7 @@ set -euo pipefail
 
 : "${OUSTER_VERSION:?OUSTER_VERSION not set}"
 
-STAGE_DIR="$PWD/stage"
+STAGE_DIR="$PWD/ouster-sdk"
 
 git clone https://github.com/ouster-lidar/ouster-sdk.git
 cd ouster-sdk

@@ -11,7 +11,7 @@ cd ouster-sdk
 git fetch --tags
 git checkout $Env:OUSTER_VERSION
 
-New-Item -ItemType Directory -Force -Path ../stage | Out-Null
+New-Item -ItemType Directory -Force -Path ../ouster-sdk | Out-Null
 
 cmake -S . -B build `
   -DCMAKE_BUILD_TYPE=Release `
@@ -22,10 +22,10 @@ cmake -S . -B build `
   -DBUILD_VIZ=OFF `
   -DBUILD_OSF=ON `
   -DBUILD_MAPPING=OFF `
-  -DCMAKE_INSTALL_PREFIX=../stage `
+  -DCMAKE_INSTALL_PREFIX=../ouster-sdk `
   -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
 
 cmake --build build --config Release
 cmake --install build --config Release
 
-Set-Content ../stage/version.txt $Env:OUSTER_VERSION
+Set-Content ../ouster-sdk/version.txt $Env:OUSTER_VERSION
