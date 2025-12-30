@@ -9,13 +9,16 @@ git clone https://github.com/ouster-lidar/ouster-sdk.git
 cd ouster-sdk
 git checkout "${OUSTER_VERSION}"
 
+mkdir -p "$STAGE_DIR"
+
 cmake -S . -B build \
   -DCMAKE_BUILD_TYPE=Release \
-  -DBUILD_OSF=ON \
   -DBUILD_SHARED_LIBRARY=OFF \
+  -DBUILD_OSF=ON \
   -DBUILD_EXAMPLES=OFF \
   -DBUILD_VIZ=OFF \
-  -DCMAKE_INSTALL_PREFIX="${STAGE_DIR}"
+  -DBUILD_TESTING=OFF \
+  -DCMAKE_INSTALL_PREFIX="$STAGE_DIR"
 
 cmake --build build -- -j$(nproc)
 cmake --install build
