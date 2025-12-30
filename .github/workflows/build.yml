@@ -72,9 +72,10 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew update
+          brew uninstall -f eigen || true
           brew install \
+            eigen@3 \
             cmake \
-            eigen \
             curl \
             libtins \
             libpng \
@@ -84,7 +85,7 @@ jobs:
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
         run: |
-          vcpkg install eigen3 curl libpcap libtins libpng zlib flatbuffers
+          vcpkg install eigen3 curl libpcap libtins libpng zlib flatbuffers --triplet x64-windows-release
 
       # -------------------------
       # Build
@@ -99,8 +100,9 @@ jobs:
       - name: Build (macOS)
         if: runner.os == 'macOS'
         run: |
-          chmod +x scripts/build-macos.sh
-          scripts/build-macos.sh
+            export CMAKE_PREFIX_PATH="/opt/homebrew/opt/eigen@3:${CMAKE_PREFIX_PATH}"
+            chmod +x scripts/build-macos.sh
+            scripts/build-macos.sh
 
       - name: Build (Windows)
         if: runner.os == 'Windows'

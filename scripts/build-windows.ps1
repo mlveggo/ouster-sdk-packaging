@@ -15,11 +15,12 @@ New-Item -ItemType Directory -Force -Path ../stage | Out-Null
 
 cmake -S . -B build `
   -DCMAKE_BUILD_TYPE=Release `
+  -DVCPKG_TARGET_TRIPLET=x64-windows-release `
   -DBUILD_SHARED_LIBRARY=OFF `
   -DBUILD_EXAMPLES=OFF `
+  -DBUILD_TESTING=OFF `
   -DBUILD_VIZ=OFF `
   -DBUILD_OSF=ON `
-  -DBUILD_TESTING=OFF `
   -DBUILD_MAPPING=OFF `
   -DCMAKE_INSTALL_PREFIX=../stage `
   -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
