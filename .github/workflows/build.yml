@@ -128,16 +128,19 @@ jobs:
       # -------------------------
 
       - name: Package artifacts
-        shell: bash
         run: |
           mkdir -p dist
+
           if [[ "$RUNNER_OS" == "Windows" ]]; then
-            zip -r dist/ouster-sdk-${OUSTER_VERSION}-windows-msvc-x64.zip ouster-sdk
+            powershell -Command `
+              "Compress-Archive -Path ouster-sdk\* -DestinationPath dist\ouster-sdk-${OUSTER_VERSION}-windows-msvc-x64.zip"
           elif [[ "$RUNNER_OS" == "macOS" ]]; then
             tar czf dist/ouster-sdk-${OUSTER_VERSION}-macos-arm64.tar.gz ouster-sdk
           else
             tar czf dist/ouster-sdk-${OUSTER_VERSION}-linux-x86_64.tar.gz ouster-sdk
           fi
+        shell: bash
+
 
       # -------------------------
       # Release
