@@ -3,10 +3,11 @@ set -euo pipefail
 
 : "${OUSTER_VERSION:?OUSTER_VERSION not set}"
 
-STAGE_DIR="$PWD/ouster-sdk"
+STAGE_DIR="$PWD/ouster"
 
 git clone https://github.com/ouster-lidar/ouster-sdk.git
 cd ouster-sdk
+git fetch --tags
 git checkout "${OUSTER_VERSION}"
 
 mkdir -p "$STAGE_DIR"
@@ -25,3 +26,5 @@ cmake -S . -B build \
 
 cmake --build build -- -j$(sysctl -n hw.ncpu)
 cmake --install build
+
+echo "${OUSTER_VERSION}" > "${STAGE_DIR}/version.txt"

@@ -5,14 +5,14 @@ if (-not $Env:OUSTER_VERSION) {
 }
 
 $VCPKG_ROOT = "C:/vcpkg"
+$STAGE_DIR="$PWD/ouster"
 
 git clone https://github.com/ouster-lidar/ouster-sdk.git
-cd ouster-sdk
+Set-Location ouster-sdk
 git fetch --tags
 git checkout $Env:OUSTER_VERSION
 
-New-Item -ItemType Directory -Force -Path ../ouster-sdk | Out-Null
-
+New-Item -ItemType Directory -Force -Path "$STAGE_DIR" | Out-Null
 cmake -S . -B build `
   -DCMAKE_BUILD_TYPE=Release `
   -DVCPKG_TARGET_TRIPLET=x64-windows-release `
@@ -22,10 +22,10 @@ cmake -S . -B build `
   -DBUILD_VIZ=OFF `
   -DBUILD_OSF=ON `
   -DBUILD_MAPPING=OFF `
-  -DCMAKE_INSTALL_PREFIX=../ouster-sdk `
+  -DCMAKE_INSTALL_PREFIX="$STAGE_DIR" `
   -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
 
 cmake --build build --config Release
 cmake --install build --config Release
 
-Set-Content ../ouster-sdk/version.txt $Env:OUSTER_VERSION
+Set-Content "$STAGE_DIR/version.txt" $Env:OUSTER_VERSION
