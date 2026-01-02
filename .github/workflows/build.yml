@@ -17,6 +17,9 @@ on:
 permissions:
   contents: write
 
+env:
+  VCPKG_BINARY_SOURCES: "clear;files,C:/vcpkg/bincache,readwrite"
+
 jobs:
   build:
     if: >
@@ -95,6 +98,13 @@ jobs:
             C:/vcpkg/buildtrees
             C:/vcpkg/packages
           key: vcpkg-${{ runner.os }}-x64-windows-release
+
+      - name: Cache vcpkg binary cache (Windows)
+        if: runner.os == 'Windows'
+        uses: actions/cache@v4
+        with:
+            path: C:/vcpkg/bincache
+            key: vcpkg-bincache-${{ runner.os }}-x64-windows-release
 
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
