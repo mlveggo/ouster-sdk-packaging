@@ -73,7 +73,8 @@ jobs:
             libeigen3-dev \
             libpng-dev \
             zlib1g-dev \
-            libflatbuffers-dev
+            libflatbuffers-dev \
+            libzip-dev
 
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
@@ -87,7 +88,8 @@ jobs:
             libtins \
             libpng \
             zlib \
-            flatbuffers
+            flatbuffers \
+            libzip
 
       - name: Cache vcpkg (Windows)
         if: runner.os == 'Windows'
@@ -109,7 +111,7 @@ jobs:
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
         run: |
-          vcpkg install eigen3 curl libpcap libtins libpng zlib flatbuffers --triplet x64-windows-release
+          vcpkg install eigen3 curl libpcap libtins libpng zlib flatbuffers libzip --triplet x64-windows-release
 
       # -------------------------
       # Build
