@@ -149,7 +149,7 @@ jobs:
         run: |
             New-Item -ItemType Directory -Force -Path dist | Out-Null
             Compress-Archive `
-              -Path ouster\* `
+              -Path ouster `
               -DestinationPath dist\ouster-sdk-$env:OUSTER_VERSION-windows-x64.zip
 
       - name: Package artifacts (macOS)
