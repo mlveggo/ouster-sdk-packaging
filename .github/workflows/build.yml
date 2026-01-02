@@ -131,7 +131,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           mkdir -p dist
-          tar czf dist/ouster-sdk-${OUSTER_VERSION}-linux-x86_64.tar.gz ouster-sdk
+          tar czf dist/ouster-sdk-${OUSTER_VERSION}-linux-x86_64.tar.gz ouster
 
       - name: Package artifacts (Windows)
         if: runner.os == 'Windows'
@@ -139,14 +139,14 @@ jobs:
         run: |
             New-Item -ItemType Directory -Force -Path dist | Out-Null
             Compress-Archive `
-              -Path ouster-sdk\* `
+              -Path ouster\* `
               -DestinationPath dist\ouster-sdk-$env:OUSTER_VERSION-windows-x64.zip
 
       - name: Package artifacts (macOS)
         if: runner.os == 'macOS'
         run: |
             mkdir -p dist
-            tar czf dist/ouster-sdk-${OUSTER_VERSION}-macos-arm64.tar.gz ouster-sdk
+            tar czf dist/ouster-sdk-${OUSTER_VERSION}-macos-arm64.tar.gz ouster
 
       # -------------------------
       # Release
