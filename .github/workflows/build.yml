@@ -31,7 +31,7 @@ jobs:
       matrix:
         os: [
             ubuntu-latest,
-            # macos-latest,
+            macos-latest,
             windows-latest
         ]
         
@@ -80,10 +80,10 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew update
-          brew uninstall -f eigen || true
           brew install \
-            eigen@3 \
             cmake \
+            pkg-config \
+            eigen \
             curl \
             libtins \
             libpng \
@@ -126,7 +126,6 @@ jobs:
       - name: Build (macOS)
         if: runner.os == 'macOS'
         run: |
-            export CMAKE_PREFIX_PATH="/opt/homebrew/opt/eigen@3:${CMAKE_PREFIX_PATH}"
             chmod +x scripts/build-macos.sh
             scripts/build-macos.sh
 

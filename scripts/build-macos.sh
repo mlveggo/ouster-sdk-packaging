@@ -12,8 +12,6 @@ git checkout "${OUSTER_VERSION}"
 
 mkdir -p "$STAGE_DIR"
 
-export CMAKE_PREFIX_PATH="/opt/homebrew/opt/eigen@3:${CMAKE_PREFIX_PATH}"
-
 cmake -S . -B build \
   -DCMAKE_BUILD_TYPE=Release \
   -DBUILD_SHARED_LIBRARY=OFF \
