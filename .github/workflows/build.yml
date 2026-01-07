@@ -89,7 +89,8 @@ jobs:
             libpng \
             zlib \
             flatbuffers \
-            libzip
+            libzip \
+            libpcap
 
       - name: Cache vcpkg (Windows)
         if: runner.os == 'Windows'
