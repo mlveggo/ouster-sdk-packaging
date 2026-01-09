@@ -14,6 +14,7 @@ mkdir -p "$STAGE_DIR"
 
 cmake -S . -B build \
   -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_SHARED_LIBS=OFF \
   -DBUILD_SHARED_LIBRARY=OFF \
   -DBUILD_OSF=ON \
   -DBUILD_EXAMPLES=OFF \

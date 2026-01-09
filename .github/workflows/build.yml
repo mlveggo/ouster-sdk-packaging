@@ -100,19 +100,28 @@ jobs:
             C:/vcpkg/installed
             C:/vcpkg/buildtrees
             C:/vcpkg/packages
-          key: vcpkg-${{ runner.os }}-x64-windows-release
+          key: vcpkg-${{ runner.os }}-x64-windows-
 
       - name: Cache vcpkg binary cache (Windows)
         if: runner.os == 'Windows'
         uses: actions/cache@v4
         with:
             path: C:/vcpkg/bincache
-            key: vcpkg-bincache-${{ runner.os }}-x64-windows-release
+            key: vcpkg-bincache-${{ runner.os }}-x64-windows-
 
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
         run: |
-          vcpkg install eigen3 curl libpcap libtins libpng zlib flatbuffers libzip --triplet x64-windows-release
+          vcpkg install `
+            eigen3 `
+            curl[openssl] `
+            libpcap `
+            libtins `
+            libpng `
+            zlib `
+            flatbuffers `
+            libzip `
+            --triplet x64-windows-static
 
       # -------------------------
       # Build

@@ -14,13 +14,14 @@ mkdir -p "$STAGE_DIR"
 
 cmake -S . -B build \
   -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_SHARED_LIBS=OFF \
   -DBUILD_SHARED_LIBRARY=OFF \
-  -DBUILD_EXAMPLES=OFF \
-  -DBUILD_TESTING=OFF \
-  -DBUILD_VIZ=OFF \
   -DBUILD_OSF=ON \
+  -DBUILD_EXAMPLES=OFF \
+  -DBUILD_VIZ=OFF \
+  -DBUILD_TESTING=OFF \
   -DBUILD_MAPPING=OFF \
-  -DCMAKE_INSTALL_PREFIX="${STAGE_DIR}"
+  -DCMAKE_INSTALL_PREFIX="$STAGE_DIR"
 
 cmake --build build -- -j$(sysctl -n hw.ncpu)
 cmake --install build

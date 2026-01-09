@@ -15,7 +15,8 @@ git checkout $Env:OUSTER_VERSION
 New-Item -ItemType Directory -Force -Path "$STAGE_DIR" | Out-Null
 cmake -S . -B build `
   -DCMAKE_BUILD_TYPE=Release `
-  -DVCPKG_TARGET_TRIPLET=x64-windows-release `
+  -DVCPKG_TARGET_TRIPLET=x64-windows-static `
+  -DBUILD_SHARED_LIBS=OFF `
   -DBUILD_SHARED_LIBRARY=OFF `
   -DBUILD_EXAMPLES=OFF `
   -DBUILD_TESTING=OFF `
